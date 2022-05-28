@@ -4,6 +4,7 @@ const initialState = {
   products: [],
   singleProduct: [],
   report: [],
+  showModal: false,
 };
 
 export default function (state = initialState, action) {
@@ -18,6 +19,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loginLoader: false,
+      };
+    case "SHOW_MODAL":
+      return {
+        ...state,
+        showModal: true,
+      };
+    case "HIDE_MODAL":
+      return {
+        ...state,
+        showModal: false,
       };
     case "FETCH_USERS":
       return {
