@@ -1,5 +1,6 @@
 const initialState = {
   loginLoader: false,
+  users: [],
 };
 
 export default function (state = initialState, action) {
@@ -14,6 +15,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loginLoader: false,
+      };
+    case "FETCH_USERS":
+      return {
+        ...state,
+        users: payload,
       };
     default:
       return state;

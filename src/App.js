@@ -33,6 +33,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route index element={<Dashboard />} />
             <Route path="products" element={<Products />} />
+            <Route path="products/:id" element={<Products />} />
             <Route path="users" element={<Users />} />
           </Route>
         </Route>

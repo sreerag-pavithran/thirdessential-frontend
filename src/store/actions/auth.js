@@ -54,8 +54,6 @@ export const adminSignup = (adminData, navigate) => async (dispatch) => {
       data: { status, message, data, access_token },
     } = res;
 
-    console.log(data, access_token);
-
     res.status && dispatch({ type: "LOGIN_LOADER_OFF" });
     status && localStorage.setItem("token", access_token);
     status && dispatch({ type: "ADMIN_DETAILS", payload: data });
@@ -71,7 +69,7 @@ export const adminSignup = (adminData, navigate) => async (dispatch) => {
   }
 };
 
-export const isLoggedIn = () => async (dispatch, navigate) => {
+export const isLoggedIn = () => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
     const config = {
@@ -91,6 +89,21 @@ export const isLoggedIn = () => async (dispatch, navigate) => {
       dispatch({
         type: "ADMIN_DETAILS",
         payload: data,
+      });
+
+    const fetchUsers = await axios.post(
+      `${process.env.REACT_APP_SERVERURL}/users/fetch-users`,
+      { token },
+      config
+    );
+    const {
+      data: {},
+    } = fetchUsers;
+
+    fetchUsers?.data?.status &&
+      dispatch({
+        type: "FETCH_USERS",
+        payload: fetchUsers?.data?.data,
       });
   } catch (error) {
     notify.error("Session timed out. Please login again!");

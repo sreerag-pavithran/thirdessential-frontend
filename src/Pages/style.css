@@ -288,8 +288,13 @@ h6 span {
   z-index: 100;
   transition: all 250ms linear;
 }
+
 .logo img {
   height: 26px;
   width: auto;
   display: block;
+}
+
+.modal-input {
+  margin-bottom: 15px !important;
 }
