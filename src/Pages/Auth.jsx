@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Button } from "antd";
-import { adminLogin } from "../store/actions/auth";
+import { adminLogin, adminSignup } from "../store/actions/auth";
 
 import "./style.css";
 
@@ -28,6 +28,19 @@ const Auth = () => {
       }
       dispatch({ type: "LOGIN_LOADER_ON" });
       dispatch(adminLogin(formData, navigate));
+      setErr(false);
+    } else {
+      if (
+        !formData?.email ||
+        !formData?.password ||
+        !formData?.address ||
+        !formData?.phone ||
+        !formData?.name
+      ) {
+        return setErr(true);
+      }
+      dispatch({ type: "LOGIN_LOADER_ON" });
+      dispatch(adminSignup(formData, navigate));
       setErr(false);
     }
   };
@@ -66,7 +79,7 @@ const Auth = () => {
                               className="form-style"
                               placeholder="Email"
                               id="logemail"
-                              autocomplete="off"
+                              autoComplete="off"
                               value={formData.email}
                               onChange={(e) =>
                                 setFormData({
@@ -83,7 +96,7 @@ const Auth = () => {
                               className="form-style"
                               placeholder="Password"
                               id="logpass"
-                              autocomplete="off"
+                              autoComplete="off"
                               value={formData.password}
                               onChange={(e) =>
                                 setFormData({
@@ -103,7 +116,7 @@ const Auth = () => {
                             onClick={() => handleSubmit("login")}
                             loading={loginLoader}
                           >
-                            Primary
+                            Login
                           </Button>
                         </div>
                       </div>
@@ -119,7 +132,7 @@ const Auth = () => {
                               className="form-style"
                               placeholder="Name"
                               id="logname"
-                              autocomplete="off"
+                              autoComplete="off"
                               required
                               value={formData.name}
                               onChange={(e) =>
@@ -137,7 +150,7 @@ const Auth = () => {
                               className="form-style"
                               placeholder="Email"
                               id="logname"
-                              autocomplete="off"
+                              autoComplete="off"
                               required
                               value={formData.email}
                               onChange={(e) =>
@@ -155,7 +168,7 @@ const Auth = () => {
                               className="form-style"
                               placeholder="Phone"
                               id="logname"
-                              autocomplete="off"
+                              autoComplete="off"
                               value={formData.phone}
                               onChange={(e) =>
                                 setFormData({
@@ -172,7 +185,7 @@ const Auth = () => {
                               className="form-style"
                               placeholder="Address"
                               id="logemail"
-                              autocomplete="off"
+                              autoComplete="off"
                               value={formData.address}
                               onChange={(e) =>
                                 setFormData({
@@ -189,7 +202,7 @@ const Auth = () => {
                               className="form-style"
                               placeholder="Password"
                               id="logpass"
-                              autocomplete="off"
+                              autoComplete="off"
                               value={formData.password}
                               onChange={(e) =>
                                 setFormData({
@@ -199,13 +212,13 @@ const Auth = () => {
                               }
                             />
                           </div>
-                          <a
-                            href="#"
+                          <Button
                             className="btn mt-4"
                             onClick={() => handleSubmit("signup")}
+                            loading={loginLoader}
                           >
                             Create Account
-                          </a>
+                          </Button>
                         </div>
                       </div>
                     </div>

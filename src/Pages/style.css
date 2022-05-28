@@ -259,25 +259,25 @@ h6 span {
   align-items: center;
   justify-content: center;
   text-align: center;
-  border: none;
-  background-color: #22a6b3;
-  color: #102770;
-  box-shadow: 0 8px 24px 0 rgba(255, 235, 167, 0.2);
+  border: none !important;
+  background-color: #22a6b3 !important;
+  color: #102770 !important;
+  /* box-shadow: 0 8px 24px 0 rgba(255, 235, 167, 0.2) !important; */
   width: 100%;
   cursor: pointer;
 }
 
 .btn:active,
 .btn:focus {
-  background-color: #102770;
-  color: #ffeba7;
-  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+  background-color: #22a6b3 !important;
+  color: #ffeba7 !important;
+  /* box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2) !important; */
 }
 
 .btn:hover {
-  background-color: #102770;
-  color: #ffeba7;
-  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+  background-color: #22a6b3 !important;
+  color: #fff !important;
+  /* box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2) !important; */
 }
 
 .logo {

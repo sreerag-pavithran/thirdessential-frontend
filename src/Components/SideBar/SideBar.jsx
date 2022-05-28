@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { images } from "../../constants";
 import sidebarNav from "../../configs/sidebarNav";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const location = useLocation();
 
@@ -50,7 +51,16 @@ const Sidebar = () => {
           <div className="sidebar__menu__item__icon">
             <i className="bx bx-log-out"></i>
           </div>
-          <div className="sidebar__menu__item__txt">Logout</div>
+          <div
+            style={{ fontFamilt: "Poppins", color: "#111" }}
+            className="sidebar__menu__item__txt"
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/auth");
+            }}
+          >
+            Logout
+          </div>
         </div>
       </div>
     </div>
