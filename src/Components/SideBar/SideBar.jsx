@@ -9,6 +9,8 @@ const Sidebar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const location = useLocation();
 
+  const isVendor = localStorage.getItem("isVendor");
+
   useEffect(() => {
     const curPath = window.location.pathname.split("/")[1];
     const activeItem = sidebarNav.findIndex((item) => item.section === curPath);
@@ -34,19 +36,33 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="sidebar__menu">
-        {sidebarNav.map((nav, index) => (
-          <Link
-            to={nav.link}
-            key={`nav-${index}`}
-            className={`sidebar__menu__item ${
-              activeIndex === index && "active"
-            }`}
-            onClick={closeSidebar}
-          >
-            <div className="sidebar__menu__item__icon">{nav.icon}</div>
-            <div className="sidebar__menu__item__txt">{nav.text}</div>
-          </Link>
-        ))}
+        {isVendor === "true"
+          ? sidebarNav.slice(0, 2).map((nav, index) => (
+              <Link
+                to={nav.link}
+                key={`nav-${index}`}
+                className={`sidebar__menu__item ${
+                  activeIndex === index && "active"
+                }`}
+                onClick={closeSidebar}
+              >
+                <div className="sidebar__menu__item__icon">{nav.icon}</div>
+                <div className="sidebar__menu__item__txt">{nav.text}</div>
+              </Link>
+            ))
+          : sidebarNav.map((nav, index) => (
+              <Link
+                to={nav.link}
+                key={`nav-${index}`}
+                className={`sidebar__menu__item ${
+                  activeIndex === index && "active"
+                }`}
+                onClick={closeSidebar}
+              >
+                <div className="sidebar__menu__item__icon">{nav.icon}</div>
+                <div className="sidebar__menu__item__txt">{nav.text}</div>
+              </Link>
+            ))}
         <div className="sidebar__menu__item">
           <div className="sidebar__menu__item__icon">
             <i class="bi bi-box-arrow-left"></i>
@@ -61,7 +77,9 @@ const Sidebar = () => {
             className="sidebar__menu__item__txt"
             onClick={() => {
               localStorage.removeItem("token");
-              navigate("/auth");
+              localStorage.removeItem("isVendor");
+              localStorage.removeItem("_id");
+              window.location.replace("/auth");
             }}
           >
             Logout

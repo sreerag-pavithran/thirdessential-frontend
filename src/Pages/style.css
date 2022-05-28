@@ -125,7 +125,7 @@ h6 span {
 .card-back {
   width: 100%;
   height: 130%;
-  background-color: #30bfbf;
+  background-color: #7ed6df;
   background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg");
   background-position: bottom center;
   background-repeat: no-repeat;
@@ -180,7 +180,7 @@ h6 span {
   background-color: #fff;
   border: none;
   transition: all 200ms linear;
-  box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+  /* box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2); */
 }
 
 .form-style:focus,

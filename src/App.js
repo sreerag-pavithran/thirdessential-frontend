@@ -15,14 +15,18 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "antd/dist/antd.css";
 import "./index.css";
 
-import { isLoggedIn } from "./store/actions/auth";
+import { isLoggedIn, isLoggedInUser } from "./store/actions/auth";
 
 function App() {
   const dispatch = useDispatch();
 
   let token = localStorage.getItem("token");
+  let isVendor = localStorage.getItem("isVendor");
+
   useEffect(() => {
-    dispatch(isLoggedIn(token));
+    isVendor === "true"
+      ? dispatch(isLoggedInUser(token))
+      : dispatch(isLoggedIn(token));
   }, []);
 
   return (

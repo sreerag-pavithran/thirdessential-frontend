@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { Button } from "antd";
-import { adminLogin, adminSignup } from "../store/actions/auth";
+import { Button, Checkbox } from "antd";
+import { adminLogin, adminSignup, userLogin } from "../store/actions/auth";
 
 import "./style.css";
 
@@ -20,14 +20,20 @@ const Auth = () => {
     phone: "",
   });
   const [err, setErr] = useState(false);
+  const [admin, setAdmin] = useState(true);
 
   const handleSubmit = (data) => {
+    console.log(admin);
     if (data === "login") {
       if (!formData?.email || !formData?.password) {
         return setErr(true);
       }
       dispatch({ type: "LOGIN_LOADER_ON" });
-      dispatch(adminLogin(formData, navigate));
+      if (admin === true) {
+        dispatch(adminLogin(formData, navigate));
+      } else {
+        dispatch(userLogin(formData, navigate));
+      }
       setErr(false);
     } else {
       if (
@@ -106,6 +112,14 @@ const Auth = () => {
                               }
                             />
                           </div>
+                          <div
+                            className="form-group mt-2"
+                            style={{ marginBottom: 15 }}
+                          >
+                            <Checkbox onChange={() => setAdmin(!admin)}>
+                              I'm a vendor
+                            </Checkbox>
+                          </div>
                           {err && (
                             <p style={{ color: "tomato" }}>
                               Please fill all fields!
@@ -124,7 +138,7 @@ const Auth = () => {
                     <div className="card-back">
                       <div className="center-wrap">
                         <div className="section text-center">
-                          <h4 className="mb-4 pb-3">Sign Up</h4>
+                          <h4 className="mb-4 pb-3">Admin Sign Up</h4>
                           <div className="form-group">
                             <input
                               type="text"
