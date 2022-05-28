@@ -1,14 +1,19 @@
 const initialState = {
-  admin: {},
+  loginLoader: false,
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case "ADMIN_DETAILS":
+    case "LOGIN_LOADER_ON":
       return {
         ...state,
-        admin: payload,
+        loginLoader: true,
+      };
+    case "LOGIN_LOADER_OFF":
+      return {
+        ...state,
+        loginLoader: false,
       };
     default:
       return state;

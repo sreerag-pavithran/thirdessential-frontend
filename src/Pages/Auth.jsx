@@ -1,8 +1,17 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { Button } from "antd";
+import { adminLogin } from "../store/actions/auth";
 
 import "./style.css";
 
 const Auth = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const loginLoader = useSelector((state) => state.dashboard.loginLoader);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,9 +19,17 @@ const Auth = () => {
     password: "",
     phone: "",
   });
+  const [err, setErr] = useState(false);
 
   const handleSubmit = (data) => {
-    console.log(data);
+    if (data === "login") {
+      if (!formData?.email || !formData?.password) {
+        return setErr(true);
+      }
+      dispatch({ type: "LOGIN_LOADER_ON" });
+      dispatch(adminLogin(formData, navigate));
+      setErr(false);
+    }
   };
 
   return (
@@ -76,13 +93,18 @@ const Auth = () => {
                               }
                             />
                           </div>
-                          <a
-                            href="#"
+                          {err && (
+                            <p style={{ color: "tomato" }}>
+                              Please fill all fields!
+                            </p>
+                          )}
+                          <Button
                             className="btn mt-4"
                             onClick={() => handleSubmit("login")}
+                            loading={loginLoader}
                           >
-                            Login
-                          </a>
+                            Primary
+                          </Button>
                         </div>
                       </div>
                     </div>
