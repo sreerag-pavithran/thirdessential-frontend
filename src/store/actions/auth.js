@@ -202,6 +202,15 @@ export const isLoggedInUser = () => async (dispatch) => {
         type: "ADMIN_DETAILS",
         payload: data,
       });
+    status &&
+      dispatch({
+        type: "USER_DETAILS",
+        payload: data,
+      });
+    status &&
+      dispatch({
+        type: "IS_VENDOR_ON",
+      });
 
     const fetchProducts = await axios.post(
       `${process.env.REACT_APP_SERVERURL}/admin/fetch-products`,
