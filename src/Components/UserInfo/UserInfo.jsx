@@ -8,10 +8,7 @@ const UserInfo = ({ user }) => {
   return (
     <div className="user-info">
       <div className="user-info__img">
-        <img
-          src="https://www.shareicon.net/data/512x512/2016/08/05/806962_user_512x512.png"
-          alt="Hero Avatar"
-        />
+        <img src="https://joeschmoe.io/api/v1/random" alt="Hero Avatar" />
       </div>
       <div className="user-info__name">
         <span>{adminDetails?.name}</span>

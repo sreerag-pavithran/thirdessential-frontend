@@ -1,18 +1,15 @@
 import React from "react";
 import "./style.scss";
 import { data } from "../../constants";
+import { useSelector } from "react-redux";
 
-const icons = [
-  <i className="bx bx-receipt"></i>,
-  <i className="bx bx-user"></i>,
-  <i className="bx bx-cube"></i>,
-  <i className="bx bx-dollar"></i>,
-];
+const icons = [<i class="bi bi-box-seam"></i>, <i class="bi bi-people"></i>];
 
 const OverallList = () => {
+  const report = useSelector((state) => state.dashboard.report);
   return (
     <ul className="overall-list">
-      {data.overall.map((item, index) => (
+      {report.slice(0, 2).map((item, index) => (
         <li className="overall-list__item" key={`overall-${index}`}>
           <div className="overall-list__item__icon">{icons[index]}</div>
           <div className="overall-list__item__info">
