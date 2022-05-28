@@ -48,7 +48,7 @@ const Products = () => {
       title: "Vendor",
       dataIndex: "vendor",
       key: "vendor",
-      render: (_, res) => <a>{res?.vendor?.name}</a>,
+      render: (_, res) => <span>{res?.vendor?.name}</span>,
     },
     {
       title: "Price",
@@ -68,6 +68,12 @@ const Products = () => {
       render: (_, ress) => {
         dayjs(ress?.updatedAt).format("DD MM YYYY hh:mm A");
       },
+    },
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      key: "actions",
+      render: () => <Button danger>Delete</Button>,
     },
   ];
 
@@ -174,6 +180,7 @@ const Products = () => {
       )}
       {list ? (
         <div>
+          <span>Click on the product to update!</span>
           <Table columns={columns} dataSource={products} />
         </div>
       ) : (
