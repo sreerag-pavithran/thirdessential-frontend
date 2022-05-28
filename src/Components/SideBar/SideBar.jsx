@@ -49,10 +49,15 @@ const Sidebar = () => {
         ))}
         <div className="sidebar__menu__item">
           <div className="sidebar__menu__item__icon">
-            <i className="bx bx-log-out"></i>
+            <i class="bi bi-box-arrow-left"></i>
           </div>
           <div
-            style={{ fontFamilt: "Poppins", color: "#111" }}
+            style={{
+              fontFamilt: "Poppins",
+              color: "#111",
+              fontSize: 15,
+              fontWeight: 400,
+            }}
             className="sidebar__menu__item__txt"
             onClick={() => {
               localStorage.removeItem("token");

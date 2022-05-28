@@ -12,6 +12,12 @@ a {
   font-family: "Poppins";
 }
 
+.sidebar__menu__item__icon i {
+  font-size: 23px !important;
+  font-weight: bold !important;
+  color: #484848 !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
