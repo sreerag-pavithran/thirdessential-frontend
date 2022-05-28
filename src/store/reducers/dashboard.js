@@ -1,6 +1,9 @@
 const initialState = {
   loginLoader: false,
   users: [],
+  products: [],
+  singleProduct: [],
+  report: [],
 };
 
 export default function (state = initialState, action) {
@@ -20,6 +23,21 @@ export default function (state = initialState, action) {
       return {
         ...state,
         users: payload,
+      };
+    case "FETCH_PRODUCTS":
+      return {
+        ...state,
+        products: payload,
+      };
+    case "FETCH_SINGLE_PRODUCT":
+      return {
+        ...state,
+        singleProduct: payload,
+      };
+    case "FETCH_REPORT":
+      return {
+        ...state,
+        report: payload,
       };
     default:
       return state;

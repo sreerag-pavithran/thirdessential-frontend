@@ -30,3 +30,26 @@ export const createUser = (userData) => async (dispatch) => {
     console.log("🤞HurraY ERROR", error);
   }
 };
+
+export const fetchSingleProduct = (id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        // authorization: `Bearer ${token}`,
+      },
+    };
+    const res = await axios.post(
+      `${process.env.REACT_APP_SERVERURL}/admin/fetch-single-product`,
+      { id },
+      config
+    );
+    const {
+      data: { status, message, data },
+    } = res;
+    console.log(data);
+    status && dispatch({ type: "FETCH_SINGLE_PRODUCT", payload: data });
+  } catch (error) {
+    console.log("🤞HurraY ERROR", error);
+  }
+};

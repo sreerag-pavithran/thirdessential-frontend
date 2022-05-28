@@ -105,8 +105,38 @@ export const isLoggedIn = () => async (dispatch) => {
         type: "FETCH_USERS",
         payload: fetchUsers?.data?.data,
       });
+
+    const fetchProducts = await axios.post(
+      `${process.env.REACT_APP_SERVERURL}/admin/fetch-products`,
+      { token },
+      config
+    );
+    const {
+      data: {},
+    } = fetchProducts;
+
+    fetchProducts?.data?.status &&
+      dispatch({
+        type: "FETCH_PRODUCTS",
+        payload: fetchProducts?.data?.data,
+      });
+
+    const fetchReport = await axios.post(
+      `${process.env.REACT_APP_SERVERURL}/admin/fetch-report`,
+      { token },
+      config
+    );
+    const {
+      data: {},
+    } = fetchReport;
+
+    fetchReport?.data?.status &&
+      dispatch({
+        type: "FETCH_REPORT",
+        payload: fetchReport?.data?.data,
+      });
   } catch (error) {
     notify.error("Session timed out. Please login again!");
-    window.location.replace("/auth");
+    // window.location.replace("/auth");
   }
 };

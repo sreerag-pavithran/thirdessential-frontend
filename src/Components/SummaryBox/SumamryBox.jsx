@@ -35,21 +35,21 @@ const SummaryBox = ({ item }) => {
         <div className="summary-box__info">
           <div className="summary-box__info__title">
             <div>{item.title}</div>
-            <span>{item.subtitle}</span>
+            <span>{item.sub}</span>
           </div>
           <div className="summary-box__info__value">{item.value}</div>
         </div>
         <div className="summary-box__chart">
           <CircularProgressbarWithChildren
-            value={item.percent}
+            value={item.value * 10}
             strokeWidth={10}
             styles={buildStyles({
-              pathColor: item.percent < 50 ? colors.red : colors.purple,
+              pathColor: item.value > 2 ? colors.red : colors.purple,
               trailColor: "transparent",
               strokeLinecap: "round",
             })}
           >
-            <div className="summary-box__chart__value">{item.percent}%</div>
+            <div className="summary-box__chart__value">{item.value * 10}%</div>
           </CircularProgressbarWithChildren>
         </div>
       </div>

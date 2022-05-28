@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Table, Button, Modal, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../store/actions/users";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 const Users = () => {
@@ -40,7 +40,7 @@ const Users = () => {
       title: "Last Login",
       dataIndex: "lastLogin",
       key: "lastLogin",
-      render: () => dayjs().format("DD MM YYYY hh:mm A"),
+      render: (_, res) => dayjs(res?.lastLogin).format("DD MM YYYY hh:mm A"),
     },
     {
       title: "Products",
