@@ -3,7 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Table, Button, Modal, Input, Avatar, Upload } from "antd";
 import dayjs from "dayjs";
-import { createProduct, fetchSingleProduct } from "../store/actions/users";
+import {
+  createProduct,
+  deleteProduct,
+  fetchSingleProduct,
+  updateProduct,
+} from "../store/actions/users";
 import { UploadOutlined } from "@ant-design/icons";
 
 const Products = () => {
@@ -12,11 +17,16 @@ const Products = () => {
   const products = useSelector((state) => state.dashboard.products);
   const singleProduct = useSelector((state) => state.dashboard.singleProduct);
   const loginLoader = useSelector((state) => state.dashboard.loginLoader);
+  const loader = useSelector((state) => state.dashboard.loader);
+  const updateData = useSelector((state) => state.dashboard.updateData);
   const vendorID = useSelector((state) => state.user.user?._id);
   const isVendor = JSON.parse(localStorage.getItem("isVendor"));
 
   const [list, setList] = useState(true);
   const modalVisible = useSelector((state) => state.dashboard.showModal);
+  const modalVisibleUpdate = useSelector(
+    (state) => state.dashboard.showModalUpdate
+  );
   const [err, setErr] = useState(false);
   const [image, setImage] = useState();
   const [media, setMedia] = useState("");
@@ -25,11 +35,16 @@ const Products = () => {
     media: image,
     price: "",
     vendor: vendorID,
+    _id: "",
   });
 
   useEffect(() => {
     dispatch(fetchSingleProduct(id));
   }, [id]);
+
+  const handleDelete = (id) => {
+    dispatch(deleteProduct({ _id: id }));
+  };
 
   const columns = [
     {
@@ -42,7 +57,16 @@ const Products = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text) => <a>{text}</a>,
+      render: (text, res) => (
+        <a
+          onClick={() => {
+            dispatch({ type: "UPDATE_DATA", payload: res });
+            dispatch({ type: "SHOW_MODAL_UPDATE" });
+          }}
+        >
+          {text}
+        </a>
+      ),
     },
     {
       title: "Vendor",
@@ -65,15 +89,21 @@ const Products = () => {
       title: "Last Updated",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      render: (_, ress) => {
-        dayjs(ress?.updatedAt).format("DD MM YYYY hh:mm A");
-      },
+      render: (_, res) => dayjs(res?.updatedAt).format("DD MM YYYY hh:mm A"),
     },
     {
       title: "Actions",
       dataIndex: "actions",
       key: "actions",
-      render: () => <Button danger>Delete</Button>,
+      render: (_, res) => (
+        <Button
+          loading={loginLoader}
+          onClick={() => handleDelete(res?._id)}
+          danger
+        >
+          Delete
+        </Button>
+      ),
     },
   ];
 
@@ -98,13 +128,13 @@ const Products = () => {
   }, [vendorID]);
 
   const handleOk = () => {
-    dispatch({ type: "LOGIN_LOADER_ON" });
     setErr(false);
     console.log(image, "Img");
     setProductData({ ...productData, media: image, vendor: vendorID });
     if (!productData?.name || !productData?.price) {
       return setErr(true);
     }
+    dispatch({ type: "LOGIN_LOADER_ON" });
     dispatch(createProduct(productData));
   };
 
@@ -120,8 +150,79 @@ const Products = () => {
     }, 0);
   };
 
+  useEffect(() => {
+    setProductData({ ...productData, _id: updateData?._id });
+  }, [updateData]);
+
+  const handleUpdate = () => {
+    dispatch({ type: "LOADER_ON" });
+    console.log(updateData?.name, "UP");
+    console.log(productData?.name, "PD");
+    console.log((productData?.name).length, "LENG");
+    let updateDataProduct = {
+      name:
+        (productData?.name).length == 0 ? updateData?.name : productData?.name,
+      price:
+        (productData?.price).length == 0
+          ? updateData?.price
+          : productData?.price,
+      vendor: vendorID,
+    };
+    dispatch(updateProduct(productData));
+  };
+
+  const handleCancelUpdate = () => {
+    dispatch({ type: "HIDE_MODAL_UPDATE" });
+  };
+
   return (
     <div>
+      {modalVisibleUpdate && (
+        <Modal
+          title="Updateproduct"
+          visible={modalVisibleUpdate}
+          onOk={handleUpdate}
+          confirmLoading={loader}
+          okText="Update product"
+          onCancel={handleCancelUpdate}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Input
+              className="modal-input"
+              type="text"
+              placeholder={updateData?.name}
+              value={productData?.name}
+              onChange={(e) =>
+                setProductData({ ...productData, name: e.target.value })
+              }
+            />
+            <Input
+              style={{ marginLeft: 10 }}
+              className="modal-input"
+              type="text"
+              placeholder={updateData?.price}
+              value={productData?.price}
+              onChange={(e) =>
+                setProductData({ ...productData, price: e.target.value })
+              }
+            />
+          </div>
+          <Avatar style={{ marginRight: 10 }} src={updateData?.media[0]} />
+          <Upload
+            accept="png"
+            style={{ width: "100%" }}
+            customRequest={dummyRequest}
+            onChange={(file) => setMedia(file)}
+            listType="picture"
+            maxCount={1}
+          >
+            <Button icon={<UploadOutlined />}>Upload product image</Button>
+          </Upload>
+          {err && (
+            <p style={{ color: "tomato" }}>Please fill all required fields *</p>
+          )}
+        </Modal>
+      )}
       {modalVisible && (
         <Modal
           title="Create new product"
@@ -175,7 +276,7 @@ const Products = () => {
             marginBottom: 20,
           }}
         >
-          <Button onClick={showModal}>Create new user</Button>
+          <Button onClick={showModal}>Create new product</Button>
         </div>
       )}
       {list ? (

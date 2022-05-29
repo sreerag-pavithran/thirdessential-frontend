@@ -5,6 +5,8 @@ const initialState = {
   singleProduct: [],
   report: [],
   showModal: false,
+  updateData: {},
+  loader: false,
 };
 
 export default function (state = initialState, action) {
@@ -20,6 +22,16 @@ export default function (state = initialState, action) {
         ...state,
         loginLoader: false,
       };
+    case "LOADER_ON":
+      return {
+        ...state,
+        loader: true,
+      };
+    case "LOADER_OFF":
+      return {
+        ...state,
+        loader: false,
+      };
     case "SHOW_MODAL":
       return {
         ...state,
@@ -29,6 +41,21 @@ export default function (state = initialState, action) {
       return {
         ...state,
         showModal: false,
+      };
+    case "SHOW_MODAL_UPDATE":
+      return {
+        ...state,
+        showModalUpdate: true,
+      };
+    case "HIDE_MODAL_UPDATE":
+      return {
+        ...state,
+        showModalUpdate: false,
+      };
+    case "UPDATE_DATA":
+      return {
+        ...state,
+        updateData: payload,
       };
     case "FETCH_USERS":
       return {
