@@ -2,11 +2,11 @@
 
 **Login Credentials**
 
-> Admin
+> Admin:
 > admin@gmail.com
 > test123
 >
-> Vendor
+> Vendor:
 > saa@gmail.com
 > test123
 
