@@ -197,6 +197,7 @@ export const isLoggedInUser = () => async (dispatch) => {
     const {
       data: { status, data },
     } = fetchData;
+    // console.log(data);
     status &&
       dispatch({
         type: "ADMIN_DETAILS",

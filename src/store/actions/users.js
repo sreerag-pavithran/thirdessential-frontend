@@ -119,6 +119,7 @@ export const updateProduct = (productData) => async (dispatch) => {
 
 export const deleteProduct = (productData) => async (dispatch) => {
   try {
+    console.log(productData);
     const config = {
       headers: {
         "Content-Type": "application/json",

@@ -43,7 +43,7 @@ const Products = () => {
   }, [id]);
 
   const handleDelete = (id) => {
-    dispatch(deleteProduct({ _id: id }));
+    dispatch(deleteProduct({ _id: id, vendor: vendorID }));
   };
 
   const columns = [
@@ -156,9 +156,6 @@ const Products = () => {
 
   const handleUpdate = () => {
     dispatch({ type: "LOADER_ON" });
-    console.log(updateData?.name, "UP");
-    console.log(productData?.name, "PD");
-    console.log((productData?.name).length, "LENG");
     let updateDataProduct = {
       name:
         (productData?.name).length == 0 ? updateData?.name : productData?.name,
@@ -167,8 +164,8 @@ const Products = () => {
           ? updateData?.price
           : productData?.price,
       _id: updateData?._id,
+      // vendor: vendorID,
     };
-    console.log(updateDataProduct);
     dispatch(updateProduct(updateDataProduct));
   };
 
@@ -176,9 +173,11 @@ const Products = () => {
     dispatch({ type: "HIDE_MODAL_UPDATE" });
   };
 
+  let isVendorCheck = localStorage.getItem("isVendor");
+
   return (
     <div>
-      {modalVisibleUpdate && (
+      {modalVisibleUpdate && isVendorCheck && (
         <Modal
           title="Updateproduct"
           visible={modalVisibleUpdate}
@@ -282,7 +281,7 @@ const Products = () => {
       )}
       {list ? (
         <div>
-          <span>Click on the product to update!</span>
+          {isVendorCheck && <span>Click on the product to update!</span>}
           <Table columns={columns} dataSource={products} />
         </div>
       ) : (
