@@ -57,7 +57,7 @@ export const adminSignup = (adminData, navigate) => async (dispatch) => {
     res.status && dispatch({ type: "LOGIN_LOADER_OFF" });
     status && localStorage.setItem("token", access_token);
     status && dispatch({ type: "ADMIN_DETAILS", payload: data });
-    status && navigate("/");
+    status && window.location.replace("/");
 
     if (status) {
       notify.success(message);

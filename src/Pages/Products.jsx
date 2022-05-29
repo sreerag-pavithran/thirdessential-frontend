@@ -166,9 +166,10 @@ const Products = () => {
         (productData?.price).length == 0
           ? updateData?.price
           : productData?.price,
-      vendor: vendorID,
+      _id: updateData?._id,
     };
-    dispatch(updateProduct(productData));
+    console.log(updateDataProduct);
+    dispatch(updateProduct(updateDataProduct));
   };
 
   const handleCancelUpdate = () => {
